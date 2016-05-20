@@ -248,3 +248,7 @@ YEM	Yemen
 ZAF	South Africa
 ZMB	Zambia
 ZWE	Zimbabwe
+IMG	International Militarized Group
+IGO	Inter(national) Governmental Organization
+MNC	Multinational Corporation
+NGO	Nongovernmental Organization
