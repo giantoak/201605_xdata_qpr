@@ -1,21 +1,21 @@
-event_root_code	description	penta_class
-1	Make Public Statement	0
-2	Appeal	0
-3	Express Intent to Coop	1
-4	Consult	1
-5	Engage in Dip Coop	1
-6	Engage in Material Coop	2
-7	Provide Aid	2
-8	Yield	2
-9	Investigate	3
-10	Demand	3
-11	Disapprove	3
-12	Reject	3
-13	Threaten	3
-14	Protest	4
-15	Exhibit Force Posture	4
-16	Reduce Relaions	3
-17	Coerce	4
-18	Assault	4
-19	Fight	4
-20	Use Unconventional Mass Violence	4
+event_root_code	cameo_description	penta_class	penta_description
+1	Make Public Statement	0	Neutral
+2	Appeal	0	Neutral
+3	Express Intent to Coop	1	Verbal Cooperation
+4	Consult	1	Verbal Cooperation
+5	Engage in Dip Coop	1	Verbal Cooperation
+6	Engage in Material Coop	2	Material Cooperation
+7	Provide Aid	2	Material Cooperation
+8	Yield	2	Material Cooperation
+9	Investigate	3	Verbal Conflict
+10	Demand	3	Verbal Conflict
+11	Disapprove	3	Verbal Conflict
+12	Reject	3	Verbal Conflict
+13	Threaten	3	Verbal Conflict
+14	Protest	4	Material Conflict
+15	Exhibit Force Posture	4	Material Conflict
+16	Reduce Relaions	3	Verbal Conflict
+17	Coerce	4	Material Conflict
+18	Assault	4	Material Conflict
+19	Fight	4	Material Conflict
+20	Use Unconventional Mass Violence	4	Material Conflict
