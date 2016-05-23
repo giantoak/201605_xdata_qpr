@@ -8,3 +8,6 @@ data/telegram/yemen_telegram filter=lfs diff=lfs merge=lfs -text
 data/telegram/yemen_telegram_5.22.2016 filter=lfs diff=lfs merge=lfs -text
 data/telegram/whereistheboom.html filter=lfs diff=lfs merge=lfs -text
 data/telegram/yementodaychannl.html filter=lfs diff=lfs merge=lfs -text
+data/microtasking/VoN_Yemen_FoodSurvey_05.23.2016.csv filter=lfs diff=lfs merge=lfs -text
+data/microtasking/Yemen_Pulse_Survey_05.23.2016.csv filter=lfs diff=lfs merge=lfs -text
+data/microtasking/VoN_Yemen_column_translation.txt filter=lfs diff=lfs merge=lfs -text
