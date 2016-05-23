@@ -6,3 +6,5 @@ data/phoenix_helpers/cameo_to_penta_class.txt filter=lfs diff=lfs merge=lfs -tex
 data/phoenix_helpers/country_codes.txt filter=lfs diff=lfs merge=lfs -text
 data/telegram/yemen_telegram filter=lfs diff=lfs merge=lfs -text
 data/telegram/yemen_telegram_5.22.2016 filter=lfs diff=lfs merge=lfs -text
+data/telegram/whereistheboom.html filter=lfs diff=lfs merge=lfs -text
+data/telegram/yementodaychannl.html filter=lfs diff=lfs merge=lfs -text
