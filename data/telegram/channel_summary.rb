@@ -1,8 +1,14 @@
 #!/bin/ruby
+#
+#      AUTHOR: Matt Parker (matt.parker@giantoak.com)
+#     CREATED: May 23, 2016
+# DESCRIPTION: Takes output from channel_scaper.rb and 
+#              calculates message counts by day.
 
 totals = {}
 row = 0
 
+# Count messages by day
 open(ARGV[0]).each do |line|
 
 	if row > 0 
@@ -19,8 +25,7 @@ open(ARGV[0]).each do |line|
 
 end
 
-
-
+# Write results to CSV file
 file = open(ARGV[1],'w')
 file << "date,total\n"
 
