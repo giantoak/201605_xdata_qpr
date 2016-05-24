@@ -1,21 +1,30 @@
 #!/bin/ruby
 #
 #      AUTHOR: Matt Parker (matt.parker@giantoak.com)
-#     CREATED: May 23, 2016
-# DESCRIPTION: Extract telegram data from whereistheboom.html
+#     CREATED: May 24, 2016
+# DESCRIPTION: Extract telegram data from telegram html file
 #
 require 'date'
 require 'nokogiri'
 require 'open-uri'
 
-data = open('whereistheboom.csv','w')
+puts "ARGS length: #{ARGV.length}\n"
+
+unless ARGV.length==2
+	puts "usage: ruby channelscraper.rb [channel html file] [csv output file]\n" 
+	exit
+end
+
+	# Stage files
+data = open( ARGV[1], 'w')
 data << "id, date, views, author, message\n"
 
-doc = Nokogiri::HTML(open('whereistheboom.html'))
+doc = Nokogiri::HTML(open(ARGV[0]))
 
 message_date = ''
 record = 0
 
+	# Process channel content
 doc.xpath('//div').each do |div|
 
 	if div['class'] == 'im_service_message' then
@@ -40,9 +49,15 @@ doc.xpath('//div').each do |div|
 		message_author = span.text if span
 
 		span = div.at("div[@class='im_message_text']")
-		temp = span.text.split('@')[0] if span
-		message_text = temp.split('www')[0] if temp
-
+		
+		if span
+			temp = span.text
+			temp = span.text.split('@')[0] if temp =~ /@/ 
+			temp = temp.split('www')[0] if temp =~ /www/
+			temp = temp.gsub(/Telegram\.me\/A11AAbot/,'') 
+			message_text = temp.gsub(/:\w+:/,'').strip
+		end
+		
 		unless message_text == ''
 			print "date: #{message_date} views: #{message_views} author: #{message_author} text: #{message_text}\n"
 			record = record + 1

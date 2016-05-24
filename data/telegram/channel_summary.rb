@@ -3,7 +3,7 @@
 totals = {}
 row = 0
 
-open('whereistheboom.csv').each do |line|
+open(ARGV[0]).each do |line|
 
 	if row > 0 
 		date = line.split(",")[1]
@@ -21,7 +21,7 @@ end
 
 
 
-file = open('whereistheboom-summary.csv','w')
+file = open(ARGV[1],'w')
 file << "date,total\n"
 
 totals.each do | key, value |
