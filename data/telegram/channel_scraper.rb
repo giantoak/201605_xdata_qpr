@@ -8,18 +8,17 @@ require 'date'
 require 'nokogiri'
 require 'open-uri'
 
-puts "ARGS length: #{ARGV.length}\n"
 
-unless ARGV.length==2
+unless ARGV.length == 2
 	puts "usage: ruby channelscraper.rb [channel html file] [csv output file]\n" 
 	exit
 end
 
 	# Stage files
 data = open( ARGV[1], 'w')
-data << "id, date, views, author, message\n"
+data << "id, date, time, views, author, message\n"
 
-doc = Nokogiri::HTML(open(ARGV[0]))
+doc = Nokogiri::HTML( open(ARGV[0]) )
 
 message_date = ''
 record = 0
@@ -33,17 +32,21 @@ doc.xpath('//div').each do |div|
 
 		if span
 			parsed_date = DateTime.strptime( span.text.split(",",2)[1].strip, '%B %d, %Y'  )
-			message_date = parsed_date.strftime('%m/%d/%Y' ) 
+			message_date = parsed_date.strftime('%Y/%m/%d' ) 
 		end
 		
 	elsif div['class'] =~ /^im_message_wrap/ then
 
-		message_views = ''
+		message_views = 0
 		message_author = ''
 		message_text = ''
+		message_time = ''
 
 		span = div.at("span[@class='im_message_views_cnt']")
 		message_views = span.text if span
+
+		span = div.at("span[@class='im_message_author_wrap']/span/span")
+		message_time = span.text if span
 		
 		span = div.at("a[@class='im_message_author']")
 		message_author = span.text if span
@@ -58,10 +61,10 @@ doc.xpath('//div').each do |div|
 			message_text = temp.gsub(/:\w+:/,'').strip
 		end
 		
-		unless message_text == ''
-			print "date: #{message_date} views: #{message_views} author: #{message_author} text: #{message_text}\n"
+		unless message_author == ''
+			print "date: #{message_date} time: #{message_time}, views: #{message_views} author: #{message_author} text: #{message_text}\n"
 			record = record + 1
-			data << "#{record},#{message_date},#{message_views},#{message_author},#{message_text}\n"
+			data << "#{record},#{message_date},#{message_time},#{message_views},#{message_author},#{message_text}\n"
 		end
 
 	end
