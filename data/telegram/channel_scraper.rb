@@ -9,14 +9,16 @@ require 'nokogiri'
 require 'open-uri'
 
 
-unless ARGV.length == 2
-	puts "usage: ruby channelscraper.rb [channel html file] [csv output file]\n" 
+unless ARGV.length == 3
+	puts "usage: ruby channelscraper.rb [channel html file] [csv outfile] [arabic outfile]\n" 
 	exit
 end
 
 	# Stage files
 data = open( ARGV[1], 'w')
 data << "id, date, time, views, author, message\n"
+
+arabic = open( ARGV[2], 'w')
 
 doc = Nokogiri::HTML( open(ARGV[0]) )
 
@@ -61,9 +63,10 @@ doc.xpath('//div').each do |div|
 			message_text = temp.gsub(/:\w+:/,'').strip
 		end
 		
-		unless message_author == ''
+		unless message_text == ''
 			print "date: #{message_date} time: #{message_time}, views: #{message_views} author: #{message_author} text: #{message_text}\n"
 			record = record + 1
+			arabic << "#{message_text}\n"
 			data << "#{record},#{message_date},#{message_time},#{message_views},#{message_author},#{message_text}\n"
 		end
 
