@@ -32,7 +32,7 @@ open(ARGV[0],'r').each do |line|
       location_longitude = data["_source"]["location"]["longitude"]
 	end
 
-	file << "#{id},#{epoch},#{Time.at(epoch.to_i)},#{location_id},#{location_name},#{location_latitude},#{location_longitude}\n"
+	file << "#{id},#{epoch},#{Time.at(epoch.to_i)},#{location_id},\"#{location_name}\",#{location_latitude},#{location_longitude}\n"
 
 	row = row + 1
 
