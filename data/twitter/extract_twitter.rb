@@ -11,14 +11,14 @@ require 'geo_ruby/geojson'    # GeoJSON
 
 require './provinces'
 
-outfile = File.open('yemen_historic_tweets_timeseries.csv','w')
+outfile = File.open(ARGV[1],'w')
 outfile << "id;posted_time;district;province;country_code;latitude;longitude;year;month;day;hour;minute;second;millisecond\n"
 
 province = Province.new('provinces.csv')
 
 row = 0
 
-open('yemen_historic_tweets').each do |line|
+open(ARGV[0]).each do |line|
 
 	data = JSON.parse(line)
 	
@@ -52,10 +52,17 @@ open('yemen_historic_tweets').each do |line|
 	#	x = 0
 	#	y =0 
 	elsif message_type == 'tweet_traptor'
-		country_code = data['_source']['doc']['place']['country_code']
-		coordinates = data['_source']['doc']['place']['bounding_box']['coordinates']
-		x = coordinates[0][0][0]+coordinates[0][2][0]/2
-		y = coordinates[0][0][1]+coordinates[0][2][1]/2
+		
+		unless data['_source']['doc']['place'].nil?
+			country_code = data['_source']['doc']['place']['country_code']
+			coordinates = data['_source']['doc']['place']['bounding_box']['coordinates']
+			x = coordinates[0][0][0]+coordinates[0][2][0]/2
+			y = coordinates[0][0][1]+coordinates[0][2][1]/2
+		else
+			coordinates = data['_source']['doc']['geo']['coordinates']
+			x = coordinates[1]
+			y = coordinates[0]
+		end
 	end
 
 	print "row: #{row} mt: #{message_type} cc: #{country_code}  x: #{x} y: #{y}\n"
@@ -64,10 +71,10 @@ open('yemen_historic_tweets').each do |line|
 	label = province.contains(point)
 	label = "none, none" if label == ''
 
-	outfile << "#{data['id']};#{data['postedTime']};#{label.gsub(/,/,';')};"
+	outfile << "#{data['_id']};#{data['_source']['norm']['timestamp']};#{label.gsub(/,/,';')};"
 
 			# 2014-08-10T01:59:02.000Z
-	posted_time = DateTime.strptime( data['postedTime'], '%Y-%m-%dT%H:%M:%S.%L' )
+	posted_time = DateTime.strptime( data['_source']['norm']['timestamp'], '%Y-%m-%dT%H:%M:%S%z' )
 	outfile << "#{country_code};#{y};#{x};#{posted_time.strftime('%Y;%m;%d;%H;%M;%S;%L')}\n"
  
 	# print "#{row}\n" if row % 10000 == 0
